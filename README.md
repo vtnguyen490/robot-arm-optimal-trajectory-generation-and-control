@@ -437,7 +437,7 @@ $$
 then it derivative is $&#8201;^A \dot  P = &#8201;^A \Omega _K \times &#8201;^A P $. However, in our case, instead of the vector P, the frame undergoes the rotation $\Omega _K$ so the derivative of vector P with respect to the frame should be $&#8201;^A \dot  P = -&#8201;^A \Omega _K \times &#8201;^A P $. As a result, we have
 
 $$
-&#8201;^{i+1}\dot w_{i+1} = &#8201;^{i+1}_{i}R &#8201;^{i} w_{i} \times \dot \theta _{i+1} Z_{i+1} + &#8201;^{i+1}_i R &#8201;^{i}\dot w_{i} +&#8201;^{i+1}\ddot \theta _{i+1} &#8201; ^{i+1}Z
+&#8201;^{i+1}\dot w_{i+1} = (&#8201;^{i+1}_{i}R &#8201;^{i} w_{i}) \times \dot \theta _{i+1} Z_{i+1} + &#8201;^{i+1}_i R &#8201;^{i}\dot w_{i} +&#8201;^{i+1}\ddot \theta _{i+1} &#8201; ^{i+1}Z
 $$
 
 Now, we move on to the derivation of velocity and acceleration
@@ -715,6 +715,7 @@ Start at $(0,0.24)^T$ and set goal to $(0.047,0.1209)^T$ at 0.5 seconds and set 
 **It is important to note that some position at the border of it configuration space (such as** $(0,0.24)^T$ **and** $(0.24,0)^T$ **) and position outside the configuration space should be avoid setting as the goal position. The start position should always be the current position of the robot arm similar to what is in the simulink file**
 
 **Open and run the file rbarm_plan_control.slx to run and test the algorithm out yourself. To change the goal position, use the step function in simulink similar to what is currently being done in the simulink file. Make sure that only change the goal position again after the manipulator has reached its previous goal which takes two seconds. The algorithm still works but the performance may be worse (as said before, the trajectory planning algorithm assume the manipulator start at rest or v = 0).**
+
 
 
 
