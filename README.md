@@ -4,7 +4,7 @@
 
 The two contributors are:
 1. Nguyen Viet Tung - https://github.com/VTNguyen490
-2. Nguyen Viet Bach - link to Github page
+2. Nguyen Viet Bach - https://github.com/bachnguyenviet
 
 ## Description
 This project aim to develop an algorithm for generating an optimal trajectory and controlling the dynamics of the robot arm to follow that trajectory with a given start and end pose of the end-effector. In this project specifically, we are generating trajectory and controlling for two DoF plannar robot arm for simplicity; However, the same algorithm can be applied to manipulators with any number of DoF as long as we have the access to its dynamic. In this project, the manipulator are working in an obstacles-free configuration space and we have full acess to the state information.
@@ -538,6 +538,7 @@ $$
 In this part, we are applying MPC controller for the system. The controller will calculate and apply the optimal input u for the next N step of times and recalculate it after a certain number of steps. With that said, our system is now
 
 $$
+\begin{aligned}
 \begin{bmatrix}
 \dot \theta \\
 \ddot \theta 
@@ -561,6 +562,7 @@ y = \begin{bmatrix}
 l_2cos(\theta _1 + \theta _2 ) + l_1cos(\theta _1)\\
 l_2sin(\theta _1 + \theta _2) + l_1sin(\theta _1)
 \end{bmatrix}
+\end{aligned}
 $$
 
 There can be two methods when linearizing this function:
@@ -715,6 +717,7 @@ Start at $(0,0.24)^T$ and set goal to $(0.047,0.1209)^T$ at 0.5 seconds and set 
 **It is important to note that some position at the border of it configuration space (such as** $(0,0.24)^T$ **and** $(0.24,0)^T$ **) and position outside the configuration space should be avoid setting as the goal position. The start position should always be the current position of the robot arm similar to what is in the simulink file**
 
 **Open and run the file rbarm_plan_control.slx to run and test the algorithm out yourself. To change the goal position, use the step function in simulink similar to what is currently being done in the simulink file. Make sure that only change the goal position again after the manipulator has reached its previous goal which takes two seconds. The algorithm still works but the performance may be worse (as said before, the trajectory planning algorithm assume the manipulator start at rest or v = 0).**
+
 
 
 
