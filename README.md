@@ -412,29 +412,91 @@ For the modelling of the system for controlling the dynamics of the manipulators
 
 Since in our case, all the links are revolute and rotate around the same Z axis, we can have a general way to propagate through every link. We will calculate the velocity, acceleration, angular velocity, angular aceleration at any given instant.
 
-**It is important to note that in the propagation, each frame doesn't move with its corresponding link but is fixed. We are propagating at each instant of the fixed frame, which mean value such as $&#8201;^{i}\dot P_{i}$ is not equal to 0** 
-
 $$
  ^{i+1}w_{i+1} =  ^{i+1}_iR  &#8201;^{i}w_{i} +\dot \theta _{i+1} &#8201;^{i+1}Z
 $$
 
+Where $&#8201;^{n}w_{m}$ denotes the angular velocity of the frame attached to link m with respect to frame n, $&#8201;^{A}_{B}R$ denotes frame B with respect to frame A. Taking the derivative, we have
 
-Where $&#8201;^{n}w_{m}$ denotes the angular velocity of the frame attached to link m with respect to frame n, $&#8201;^{A}_{B}R $ denotes frame B with respect to frame A. Taking the derivative, we have
+**In the propagation, each frame doesn't move simultaneously with its corresponding link but is fixed at each instance. Therefore, it is important to note some terms that can cause confusion. Specifically, since we are calculating the acceleration at each instance of the frame, the term $&#8201;^{i+1}\dot w_{i+1}$, for example, does not mean $\frac{d}{dt} (^{i+1}w_{i+1})$ but rather the rate of change of angular velocity (angular acceleration) of link i+1 with respect to frame i+1 at that instance (i.e: $&#8201;^{i+1}_{0}R \frac{d}{dt}$ )** 
 
-$$
-&#8201;^{i+1}\dot w_{i+1} = &#8201;^{i+1}_i\dot R &#8201;^{i} w_{i} + &#8201;^{i+1}_iR &#8201;^{i}\dot w_{i} +\ddot \theta _{i+1} &#8201; ^{i+1}Z
-$$
-
-Remember that for any vector P in a frame A undergo a rotation $\Omega _K$ around an abitrary frame K describe as 
+We have
 
 $$
+\begin{aligned}
+&#8201;^{0}w_{i+1} = &#8201;^{0} w_{i} + &#8201;^{0}_{i+1}R \dot \theta _{i+1} &#8201; ^{i+1}Z \\
+&#8201;^{0} \dot w_{i+1} = &#8201;^{0} \dot w_{i} + &#8201;^{0}_{i+1} \dot R \dot \theta _{i+1} &#8201; ^{i+1}Z + &#8201;^{0}_{i+1}R \ddot \theta _{i+1} &#8201; ^{i+1}Z\\
+&#8201;^{i+1}_{0} R &#8201;^{0} \dot w_{i+1} = &#8201;^{i+1}_{0} R &#8201;^{0}_{i} R (&#8201;^{i}_{0} R &#8201;^{0} \dot w_{i}) + &#8201;^{i+1}_{0} R &#8201;^{0}_{i+1} \dot R \dot \theta _{i+1} &#8201; ^{i+1}Z + \ddot \theta _{i+1} &#8201; ^{i+1}Z\\
+\end{aligned}
+$$
+
+We have the result that $&#8201;^{i+1} R &#8201;^0_{i+1}\dot R$ is a skew symmetric matrix and is correspond skew-symmetric matrix of $&#8201;^{0}w_{i+1}$. 
+
+Let $R_K(\Delta \theta)$ be a rotation matrix represent a small rotation of $\Delta \theta$ around an abitrary axis K achieved during the time interval $\Delta t$. Then:
+
+$$
+\begin{aligned}
+R(t + \Delta t) = R_K(\Delta \theta)R(t) \\
+\dot R(t) = lim_{\Delta x \to 0} (\frac{R_K(\Delta \theta) - I_3}{\Delta t})R(t)\\
+\end{aligned}
+$$
+
+Base on the formular for a roation around abitrary axis, we can approximate $R_K(\Delta \theta)$ when $\Delta \theta$ small as
+
+$$
+R_K(\Delta \theta) = 
 \begin{bmatrix}
-\Omega _x\\
-\Omega _y\\
-\Omega _z\\
-\end{bmatrix}$$
+1&-k_z \Delta \theta&k_y \Delta \theta\\
+k_z \Delta \theta&1&-k_x \Delta \theta\\
+-k_y \Delta \theta&k_x \Delta \theta&1\\
+\end{bmatrix}
+$$
 
-then it derivative is $&#8201;^A \dot  P = &#8201;^A \Omega _K \times &#8201;^A P $. However, in our case, instead of the vector P, the frame undergoes the rotation $\Omega _K$ so the derivative of vector P with respect to the frame should be $&#8201;^A \dot  P = -&#8201;^A \Omega _K \times &#8201;^A P $. As a result, we have
+Therefore
+
+$$
+\dot R R ^{-1} = 
+\begin{bmatrix}
+0&-k_z \dot \theta&k_y \dot \theta\\
+k_z \dot \theta&0&-k_x \dot \theta\\
+-k_y \dot \theta&k_x \dot \theta&0\\
+\end{bmatrix}
+$$
+
+or 
+
+$$
+\dot R R ^T = 
+\begin{bmatrix}
+0&-k_z \dot \theta&k_y \dot \theta\\
+k_z \dot \theta&0&-k_x \dot \theta\\
+-k_y \dot \theta&k_x \dot \theta&0\\
+\end{bmatrix}
+$$
+
+Furthermore, we have that:
+
+$$
+\begin{aligned}
+&#8201;^{A}P = &#8201;^{A}_B R &#8201;^{B}P \\
+&#8201;^{A}V_P = &#8201;^{A}_B \dot R &#8201;^{B}P = &#8201;^{A}_B \dot R &#8201;^{B}_A R  &#8201;^{A}P = \omega \times &#8201;^{A}P   \\
+\end{aligned}
+$$
+
+Thus
+
+$$
+\begin{aligned}
+&#8201;^{i+1}_{0} R &#8201;^{0}_{i+1} \dot R  + &#8201;^{i+1}_{0} \dot R &#8201;^{0}_{i+1} R = \frac{d(&#8201;^{i+1}_{0} R &#8201;^{0}_{i+1} R)}{dt} = 0\\
+&#8201;^{i+1}_{0} R &#8201;^{0}_{i+1} \dot R = -&#8201;^{i+1}_{0} \dot R &#8201;^{0}_{i+1} R = -&#8201;^{i+1} \omega _{0} \times \\
+\end{aligned}
+$$
+
+Therefore
+
+$$
+&#8201;^{i+1}_{0} R &#8201;^{0} \dot w_{i+1} = &#8201;^{i+1}_{0} R &#8201;^{0}_{i} R (&#8201;^{i}_{0} R &#8201;^{0} \dot w_{i}) + &#8201;^{i+1}_{0} R &#8201;^{0}_{i+1} \dot R \dot \theta _{i+1} &#8201; ^{i+1}Z + \ddot \theta _{i+1} &#8201; ^{i+1}Z\\
+$$
 
 $$
 &#8201;^{i+1}\dot w_{i+1} = (&#8201;^{i+1}_{i}R &#8201;^{i} w_{i}) \times \dot \theta _{i+1} Z_{i+1} + &#8201;^{i+1}_i R &#8201;^{i}\dot w_{i} +&#8201;^{i+1}\ddot \theta _{i+1} &#8201; ^{i+1}Z
