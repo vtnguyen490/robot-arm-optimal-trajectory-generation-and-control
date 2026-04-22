@@ -418,7 +418,7 @@ $$
 
 Where $&#8201;^{n}w_{m}$ denotes the angular velocity of the frame attached to link m with respect to frame n, $&#8201;^{A}_{B}R$ denotes frame B with respect to frame A. Taking the derivative, we have
 
-**In the propagation, each frame doesn't move simultaneously with its corresponding link but is fixed at each instance. Therefore, it is important to note some terms that can cause confusion. Specifically, since we are calculating the acceleration at each instance of the frame, the term $&#8201;^{i+1}\dot w_{i+1}$, for example, does not mean $\frac{d}{dt} (^{i+1}w_{i+1})$ but rather the rate of change of angular velocity (angular acceleration) of link i+1 with respect to frame i+1 at that instance (i.e: $&#8201;^{i+1}_{0}R \frac{d}{dt}$ )** 
+**In the propagation, each frame doesn't move simultaneously with its corresponding link but is fixed at each instance. Therefore, it is important to note some terms that can cause confusion. Specifically, since we are calculating the acceleration at each instance of the frame, the term $&#8201;^{i+1}\dot w_{i+1}$, for example, does not mean $\frac{d}{dt} (^{i+1}w_{i+1})$ but rather the rate of change of angular velocity (angular acceleration) of link i+1 with respect to frame i+1 at that instance (i.e: $&#8201;^{i+1}_{0}R \frac{d}{dt}$ $(^0 w _{i+1})$ )** 
 
 We have
 
@@ -487,16 +487,17 @@ Thus
 
 $$
 \begin{aligned}
-&#8201;^{i+1}_{0} R &#8201;^{0}_{i+1} \dot R  + &#8201;^{i+1}_{0} \dot R &#8201;^{0}_{i+1} R = \frac{d(&#8201;^{i+1}_{0} R &#8201;^{0}_{i+1} R)}{dt} = 0\\
-&#8201;^{i+1}_{0} R &#8201;^{0}_{i+1} \dot R = -&#8201;^{i+1}_{0} \dot R &#8201;^{0}_{i+1} R = -&#8201;^{i+1} \omega _{0} \times \\
+&#8201;^{i+1}_{0} R &#8201;^{0}_{i+1} \dot R = -&#8201;^{i+1}_{0} \dot R &#8201;^{0}_{i+1} R = -&#8201;^{i+1} \omega _{0} \times = &#8201;^{i+1} \omega _{i+1} \times \\
 \end{aligned}
 $$
 
-Therefore
+We also have 
 
 $$
-&#8201;^{i+1}_{0} R &#8201;^{0} \dot w_{i+1} = &#8201;^{i+1}_{0} R &#8201;^{0}_{i} R (&#8201;^{i}_{0} R &#8201;^{0} \dot w_{i}) + &#8201;^{i+1}_{0} R &#8201;^{0}_{i+1} \dot R \dot \theta _{i+1} &#8201; ^{i+1}Z + \ddot \theta _{i+1} &#8201; ^{i+1}Z\\
+ ^{i+1}w_{i+1} =  ^{i+1}_iR  &#8201;^{i}w_{i} +\dot \theta _{i+1} &#8201;^{i+1}Z
 $$
+
+Replacing $&#8201;^{i+1} R &#8201;^{0} \dot w_{i+1}$ as $&#8201;^{i+1} \dot w_{i+1}$ and $&#8201;^{i} R &#8201;^{0} \dot w_{i}$ as $&#8201;^{i} \dot w_{i}$ and using the equalities above, we have:
 
 $$
 &#8201;^{i+1}\dot w_{i+1} = (&#8201;^{i+1}_{i}R &#8201;^{i} w_{i}) \times \dot \theta _{i+1} Z_{i+1} + &#8201;^{i+1}_i R &#8201;^{i}\dot w_{i} +&#8201;^{i+1}\ddot \theta _{i+1} &#8201; ^{i+1}Z
@@ -505,17 +506,23 @@ $$
 Now, we move on to the derivation of velocity and acceleration
 
 $$
-&#8201;^{i+1}v_{i+1} = &#8201;^{i+1}_{i} R &#8201;^i v_{i} + &#8201;^{i+1}_i R (&#8201;^{i}w_{i} \times &#8201;^{i} P_{i+1})
+\begin{aligned}
+&#8201;^{i+1}v_{i+1} = &#8201;^{i+1}_{i} R &#8201;^i v_{i} + &#8201;^{i+1}_i R (&#8201;^{i}w_{i} \times &#8201;^{i} P_{i+1})\\
+&#8201;^{0}v_{i+1} =  &#8201;^0 v_{i} + &#8201;^{0}_i R (&#8201;^{i}w_{i} \times &#8201;^{i} P_{i+1})\\
+&#8201;^{0} \dot v_{i+1} =  &#8201;^0 \dot v_{i} + &#8201;^{0}_i \dot R (&#8201;^{i}w_{i} \times &#8201;^{i} P_{i+1}) + &#8201;^{0}_i R (&#8201;^{i}\dot w_{i} \times &#8201;^{i} P_{i+1}) + &#8201;^{0}_i R (&#8201;^{i}w_{i} \times &#8201;^{i} \dot P_{i+1})\\
+\end{aligned}
 $$
 
-where $&#8201;^{i} P_{i+1}$ is the position of frame $i+1$ with regard to frame $i$. Because cross product can be considered as product with a correspond skew symmetric matrix, we can use normal rule to take the derivative.
+Because $^i P_{i+1}$ is a constant, we have:
 
 $$
-&#8201;^{i+1}\dot v_{i+1} = &#8201;^{i+1}_i\dot R &#8201;^{i}v_{i} + &#8201;^{i+1}_i R &#8201;^{i}\dot v_{i} +&#8201;^{i+1}_i\dot R &#8201;^{i}w_i \times &#8201; ^{i}P_{i+1} + &#8201;^{i+1}_i R &#8201;^{i} \dot w_i \times &#8201; ^{i}P_{i+1} + &#8201;^{i+1}_i R &#8201;^{i} w_i \times &#8201; ^{i}\dot P_{i+1}\\ 
+&#8201;^{i+1}\dot v_{i+1} = &#8201;^{i+1}_i R [ &#8201;^{i}\dot v_{i} + &#8201;^{i}\dot w_{i} \times &#8201; ^{i} P_{i+1}] + &#8201;^{i+1}_0 R &#8201;^{0}_i \dot R (&#8201;^{i} w_{i} \times &#8201; ^{i} P_{i+1})
 $$
 
+Similar to before, we have:
+
 $$
-&#8201;^{i+1}\dot v_{i+1} = &#8201;^{i+1}_i R [ &#8201;^{i}\dot v_{i} + &#8201;^{i}\dot w_{i} \times &#8201; ^{i} P_{i+1} + &#8201;^{i} w_{i} \times (&#8201;^{i} w_{i} \times &#8201; ^{i} P_{i+1}) ]
+&#8201;^{i+1}_0 R &#8201;^{0}_i \dot R = &#8201;^{i+1}_i R &#8201;^{0}_i R &#8201;^{0}_i \dot R = &#8201;^{i+1}_i R &#8201;^{i} w_i \times
 $$
 
 From this, we can derive the velocity of the center of mass of each link
