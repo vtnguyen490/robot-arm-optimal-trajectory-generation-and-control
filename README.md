@@ -474,7 +474,7 @@ k_z \dot \theta&0&-k_x \dot \theta\\
 \end{bmatrix}
 $$
 
-Furthermore, we have that:
+which is a skew-symmetric matrix. Furthermore, we have that:
 
 $$
 \begin{aligned}
@@ -525,14 +525,33 @@ $$
 &#8201;^{i+1}_0 R &#8201;^{0}_i \dot R = &#8201;^{i+1}_i R &#8201;^{0}_i R &#8201;^{0}_i \dot R = &#8201;^{i+1}_i R &#8201;^{i} w_i \times
 $$
 
-From this, we can derive the velocity of the center of mass of each link
+Therefore
+
+$$
+&#8201;^{i+1}\dot v_{i+1} = &#8201;^{i+1}_i R [ &#8201;^{i}\dot v_{i} + &#8201;^{i}\dot w_{i} \times &#8201; ^{i} P_{i+1} +&#8201;^{i} w_{i} \times (&#8201;^{i} w_{i} \times &#8201; ^{i} P_{i+1}) ]
+$$
+
+Now we can derive the linear acceleration of the center of mass of each link base on angular and linear acceleration of that link
 
 $$
 \begin{aligned}
 &#8201;^{i} v_{C_{i}} =&#8201;^{i} w_{i} \times &#8201; ^{i} P_{i} + &#8201; ^{i} v_{i} \\
-&#8201;^{i} \dot v_{C_{i}} = &#8201;^{i} \dot w_{i} \times &#8201; ^{i} P_{C_{i}} + &#8201;^{i} w_{i} \times &#8201; ^{i} \dot P_{C{i}} + &#8201; ^{i} \dot  v_{i} \\
-&#8201;^{i} \dot v_{C_{i}} = &#8201;^{i} \dot w_{i} \times &#8201; ^{i} P_{C_{i}} + &#8201;^{i} w_{i} \times (&#8201;^{i} w_{i} \times &#8201; ^{i} P_{C_{i}}) + &#8201; ^{i} \dot  v_{i}
+&#8201;^{0} v_{C_{i}} =&#8201;^{0}_i R &#8201;^{i} w_{i} \times &#8201; ^{i} P_{i} + &#8201; ^{0} v_{i} \\
+&#8201;^{0} \dot v_{C_{i}} = &#8201;^{0}_i \dot R &#8201;^{i} w_{i} \times &#8201; ^{i} P_{i} + &#8201;^{0}_i R &#8201;^{i} \dot w_{i} \times &#8201; ^{i} P_{i} + &#8201; ^{0} \dot v_{i}\\
+&#8201;^{i}_0 R&#8201; ^{0} \dot v_{C_{i}} = &#8201;^{i}_0 R&#8201;^{0}_i \dot R &#8201;^{i} w_{i} \times &#8201; ^{i} P_{i} + &#8201;^{i} \dot w_{i} \times &#8201; ^{i} P_{i} + &#8201;^{i}_0 R &#8201; ^{0} \dot v_{i}\\
 \end{aligned}
+$$
+
+Similar to before, we have:
+
+$$
+&#8201;^{i}_0 R&#8201;^{0}_i \dot R =  &#8201^{i} w_i \times
+$$
+
+So we have
+
+$$
+&#8201;^{i} \dot v_{C_{i}} = &#8201;^{i} \dot w_{i} \times &#8201; ^{i} P_{C_{i}} + &#8201;^{i} w_{i} \times (&#8201;^{i} w_{i} \times &#8201; ^{i} P_{C_{i}}) + &#8201; ^{i} \dot  v_{i}
 $$
 
 2. **Force and Moment backward propagation with Newton and Euler's equations**
